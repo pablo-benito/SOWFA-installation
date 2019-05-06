@@ -1,10 +1,12 @@
-% SOWFA - OpenFAST installation notes
-% Pablo Benito Cia (<pbenito@cener.com>)
-  Technical Computing and Software Development Service
-% [CENER](http://www.cener.com) - May 6th, 2019
+# SOWFA - OpenFAST installation notes
+
+Pablo Benito Cia (<pbenito@cener.com>)
+Technical Computing and Software Development Service
+
+[CENER](http://www.cener.com) - May 6th, 2019
 
 
-# Requirements {#requirements -}
+## Requirements 
 
 This document contains a brief notes about how to compile and install NREL/SOWFA coupled with OpenFAST. 
 
@@ -48,7 +50,7 @@ $ sudo apt install build-essential flex bison gfortran git cmake python python-d
 ```
 
 
-# OpenFAST compilation {#openfastcompilation -}
+## OpenFAST compilation 
 
 OpenFAST code is basically Fortran (2003 standard) with some parts in C++ (2011 standard) code, so a recent C++ and Fortran compiler is needed. After the tests we did, we can say that the best performance is achieved by using a recent version of the Intel Composer Compiler Suite. 
 
@@ -126,7 +128,7 @@ $ make install
 ```
 
 
-# OpenFOAM 2.4.x compilation {#openfoamcompilation -}
+## OpenFOAM 2.4.x compilation 
 
 For the moment, SOWFA is an OpenFOAM 2.4.x only application, so we must have available an installation of this version of OpenFOAM. 
 
@@ -181,7 +183,7 @@ $ ./Allwmake
 ```
 
 
-# SOWFA compilation {#sowfacompilation -}
+## SOWFA compilation 
 
 Before doing anything we must load our OpenFOAM environment by:
 
@@ -271,7 +273,7 @@ $ ls ${FOAM_USER_LIBBIN}
 ```
 
 
-# Runtime configuration {#runtimeconfiguration -}
+## Runtime configuration 
 
 As we have seen, SOWFA binaries depends on a wide group of libraries: The OpenFOAM core libraries, the OpenFAST libraries, the Blas/Lapack libraries, the HDF5 libraries and its own group of libraries. In order to be able to run the SOWFA utilities, we must be sure that *all* needed libraries are visible to the binaries at runtime. 
 
@@ -305,7 +307,7 @@ $ export LD_LIBRARY_PATH=/location/of/SOWFA/libraries/:${LD_LIBRARY_PATH}
 ```
  
 
-# References {#references -}
+## References {#references -}
 
  * [SOWFA github](https://github.com/NREL/SOWFA.git)
  * [OpenFAST](http://openfast.readthedocs.io)
