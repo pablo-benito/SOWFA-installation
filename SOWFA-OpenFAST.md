@@ -307,7 +307,7 @@ $ export LD_LIBRARY_PATH=/location/of/SOWFA/libraries/:${LD_LIBRARY_PATH}
 ```
  
 
-## References {#references -}
+## References
 
  * [SOWFA github](https://github.com/NREL/SOWFA.git)
  * [OpenFAST](http://openfast.readthedocs.io)
