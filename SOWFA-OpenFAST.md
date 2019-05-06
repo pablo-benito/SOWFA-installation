@@ -1,14 +1,11 @@
 # SOWFA - OpenFAST installation notes
 
-Pablo Benito Cia (<pbenito@cener.com>)
-Technical Computing and Software Development Service
+This document contains a brief notes about how to compile and install NREL/SOWFA coupled with OpenFAST. 
 
-[CENER](http://www.cener.com) - May 6th, 2019
 
 
 ## Requirements 
 
-This document contains a brief notes about how to compile and install NREL/SOWFA coupled with OpenFAST. 
 
 To be able to run SOWFA, you have compile its three main components: [**OpenFAST**](#openfastcompilation), [**OpenFOAM 2.4.x**](#openfoamcompilation), and [**SOWFA**](#sowfacompilation) itself.
 
@@ -313,3 +310,7 @@ $ export LD_LIBRARY_PATH=/location/of/SOWFA/libraries/:${LD_LIBRARY_PATH}
  * [OpenFAST](http://openfast.readthedocs.io)
  * [OpenFAST installation docs](http://openfast.readthedocs.io/en/master/source/install/index.html)
  * [OpenFOAM installation](https://openfoamwiki.net/index.php/Installation/Linux/OpenFOAM-2.4.0/Ubuntu#Ubuntu_16.04)
+
+
+
+
