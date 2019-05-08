@@ -7,7 +7,7 @@ This document contains a brief notes about how to compile and install NREL/SOWFA
 ## Requirements 
 
 
-To be able to run SOWFA, you have compile its three main components: [**OpenFAST**](#openfastcompilation), [**OpenFOAM 2.4.x**](#openfoam-24x-compilation), and [**SOWFA**](#sowfacompilation) itself.
+To be able to run SOWFA, you have compile its three main components: [**OpenFAST**](#openfast-compilation), [**OpenFOAM 2.4.x**](#openfoam-24x-compilation), and [**SOWFA**](#sowfa-compilation) itself.
 
 But before doing it, you have to ensure that the machine that will compile all the software has the proper tools and extra software to do so. 
 First of all you will need a couple of compilers. For the OpenFOAM parts, the GNU Compiler Collection is more than enough. But for the Fortran parts, like OpenFAST, the Intel Compiler suite is highly recommended. 
