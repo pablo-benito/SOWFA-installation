@@ -100,7 +100,7 @@ By default the OpenFAST `cmake` script will try to find and use the Intel MKL li
 
 
 Finally we can launch the `cmake` command. As you can see in the example below, with the first 3 arguments we declare the compilers for C, C++ and Fortran that we want to use. If you use gcc/gfortran those lines are not needed, but, if you use a different compiler you should change those three lines accordingly. The C++ parts of OpenFAST need a 2011 C++ standard compliant compiler. For GCC, this means at least GCC 4.8.1.
-The `DCMAKE_INSTALL_PREFIX` argument controls the destination path of the OpenFAST compilation. You have to put there the path to folder where you want to install OpenFAST.
+The `DCMAKE_INSTALL_PREFIX` argument controls the destination path of the OpenFAST compilation. You have to put there the path to folder where you want to install OpenFAST. The flag `FPE_TRAP_ENABLED` must be ON, otherwise, SOWFA simulations will crash with a floating point exception during OpenFAST initialization (thanks to [@mchurchf](https://github.com/mchurchf), [@ewquon ](https://github.com/ewquon) and [@hjohlas](https://github.com/hjohlas) for their help with solving this)
 
 The two final arguments are needed in order to couple OpenFAST with OpenFOAM. 
 
@@ -111,6 +111,7 @@ $ cmake \
     -DCMAKE_CXX_COMPILER=icpc \
     -DCMAKE_Fortran_COMPILER=ifort \
     -DCMAKE_INSTALL_PREFIX="/path/to/wherever/you/want/to/install/OpenFAST" \
+    -DFPE_TRAP_ENABLED=ON \
     -DBUILD_FAST_CPP_API:BOOL=ON \
     -DBUILD_SHARED_LIBS:BOOL=ON \
     ../
