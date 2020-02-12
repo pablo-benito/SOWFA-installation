@@ -112,7 +112,7 @@ $ cmake \
     -DCMAKE_Fortran_COMPILER=ifort \
     -DCMAKE_INSTALL_PREFIX="/path/to/wherever/you/want/to/install/OpenFAST" \
     -DFPE_TRAP_ENABLED=ON \
-    -DBUILD_FAST_CPP_API:BOOL=ON \
+    -DBUILD_OPENFAST_CPP_API:BOOL=ON \
     -DBUILD_SHARED_LIBS:BOOL=ON \
     ../
 ```
