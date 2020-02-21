@@ -43,7 +43,7 @@ As we said, on a Ubuntu 16.04.3 LTS machine all those packages can be installed 
 $ sudo apt install build-essential flex bison gfortran git cmake python python-dev  \
     zlib1g-dev libreadline-dev libncurses-dev libyaml-cpp-dev libgmp-dev libmpfr-dev \
     libboost-system-dev libboost-thread-dev libopenmpi-dev openmpi-bin \
-    libhdf5-dev libxml2-dev    
+    libhdf5-dev libxml2-dev libcgal-dev libptscotch-dev libscotch-dev   
 ```
 
 
