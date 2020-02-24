@@ -231,7 +231,7 @@ $ export OPENFAST_DIR="/path/to/wherever/you/installed/OpenFAST"
 ``` 
 
 
-Also, we export the location of the HDF5 installation directory. You should change the path to wherever you have installed the HDF5 library. On Ubuntu 16.04 this should be:
+Also, we export the location of the HDF5 installation directory. You should change the path to wherever you have installed the HDF5 library. On Ubuntu 16.04 and Ubuntu 18.04 this should be:
 
 ```bash
 $ export HDF5_DIR="/usr/lib/x86_64-linux-gnu/hdf5/serial"
