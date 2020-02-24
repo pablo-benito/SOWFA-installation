@@ -35,9 +35,9 @@ Also you will need a bunch of extra tools and libraries:
 
 Normally all those packages can be directly downloaded from the repositories of your Linux distribution, so there is no need to download and compile them.
  
-It's impossible to cover all the combinations of OS, package versions and environments, so this document assumes that the machine used to compile the code, runs an Ubuntu 16.04.3 LTS, with OpenMPI as MPI library. If you use another OS, or another environment (like Environment Modules) you must adapt the commands to your specific requirements.
+It's impossible to cover all the combinations of OS, package versions and environments, so this document assumes that the machine used to compile the code, runs an Ubuntu 16.04 LTS or Ubuntu 18.04, with OpenMPI as MPI library. If you use another OS, or another environment (like Environment Modules) you must adapt the commands to your specific requirements.
 
-As we said, on a Ubuntu 16.04.3 LTS machine all those packages can be installed simply typing:
+As we said, on an Ubuntu 16.04/18.04 machine all those packages can be installed simply typing:
 
 ```bash
 $ sudo apt install build-essential flex bison gfortran git cmake python python-dev  \
@@ -69,7 +69,7 @@ $ cd build
 
 Then you have to declare the location of the libraries and headers of the different libraries needed by OpenFAST: libhdf5, yaml-cpp. 
 
-For the HDF5 library, as we indicated in [**Requirements**](#requirements) section of this document, we used the *serial* version that comes with Ubuntu 16.04.3 LTS. Once installed, the libraries and development headers can be located in `/usr/lib/x86_64-linux-gnu/hdf5/serial`. 
+For the HDF5 library, as we indicated in [**Requirements**](#requirements) section of this document, we used the *serial* version that comes with Ubuntu 16.04/18.04. Once installed, the libraries and development headers can be located in `/usr/lib/x86_64-linux-gnu/hdf5/serial`. 
 
 The Yaml-cpp library was also installed through the package manager, and the root location of the libraries and headers is, therefore, `/usr/`.
 
