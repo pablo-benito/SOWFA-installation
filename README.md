@@ -198,7 +198,7 @@ $ git clone https://github.com/NREL/SOWFA.git
 $ cd SOWFA
 ```
 
-At the time of writing this document, there is a change that we must do in the OpenFAST SOWFA code: On Ubuntu 16.04, the HDF5 header files are not in a gcc compiler `include` default path, and a couple of applications will fail to build, because `wmake` will not be able to find them. The issue can be easily solved by editing the `options` file located at:
+At the time of writing this document, there is a change that we must do in the OpenFAST SOWFA code: On Ubuntu 16.04 and 18.04, the HDF5 header files are not in a gcc compiler `include` default path, and a couple of applications will fail to build, because `wmake` will not be able to find them. The issue can be easily solved by editing the `options` file located at:
 
 ```
 applications/solvers/incompressible/windEnergy/pisoFoamTurbine.ALMAdvancedOpenFAST/Make/
