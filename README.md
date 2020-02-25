@@ -189,7 +189,7 @@ Before doing anything we must load our OpenFOAM environment by:
 $ source ${HOME}/OpenFOAM/OpenFOAM-2.4.x/etc/bashrc
 ```
 
-Then, we download the SOWFA code and switch to the OpenFAST branch:
+Then, we download the SOWFA code:
 
 ```bash
 # Download SOWFA code into ${HOME}
@@ -198,10 +198,12 @@ $ git clone https://github.com/NREL/SOWFA.git
 $ cd SOWFA
 ```
 
-At the time of writing this document, there is a change that we must do in the OpenFAST SOWFA code: On Ubuntu 16.04 and 18.04, the HDF5 header files are not in a gcc compiler `include` default path, and a couple of applications will fail to build, because `wmake` will not be able to find them. The issue can be easily solved by editing the `options` file located at:
+At the time of writing this document, there is a couple of changes that we must do in the OpenFAST SOWFA code. First of all, we must add the include paths and lib path to the HDF5 library in certain files. Also, starting with OpenFAST version 1.0, there is an extra library, `versioninfolib`, that must be included as a dependency in some SOWFA binaries.
+
+To solve all those issues we must  edit certain `options` files. The first one is located at:
 
 ```
-applications/solvers/incompressible/windEnergy/pisoFoamTurbine.ALMAdvancedOpenFAST/Make/
+applications/solvers/incompressible/windEnergy/pisoFoamTurbine.ALMAdvancedOpenFAST/Make/options 
 ``` 
 
 Inside that file, add `-I$(HDF5_DIR)/include` at the end of the `EXE_INC` variable, so that it looks like this:
@@ -219,36 +221,97 @@ EXE_INC = \
       $(PFLAGS) \
       $(PINC) \
     -I$(OPENFAST_DIR)/include \
-    -I$(HDF5_DIR)/include # Add this line. Add a backslash in the previous line if needed
+    -I$(HDF5_DIR)/include # <--- Add this line. Add a backslash in the previous line if needed
 
 ``` 
 
+Also, inside that file, in the `EXE_LIBS` variable, add the dependency to the new OpenFAST library, `versioninfolib`, 
 
-Then, we export the location of the OpenFAST installation directory. You must change the path to wherever you installed OpenFAST:
+```bash
+
+    -lsctypeslib \
+    -lservodynlib \
+    -lsubdynlib \
+    -lversioninfolib \  # <--- Add this line 
+     $(BLASLIB) \
+    -L$(HDF5_DIR)/lib/ \
+    -lhdf5_hl \
+    -lhdf5 
+```
+
+Then open the next `options` file:
+```bash
+applications/solvers/incompressible/windEnergy/windPlantSolver.ALMAdvancedOpenFAST/Make/options
+```
+
+and, again, add the dependency to the  `versioninfolib` library, inside the `EXE_LIBS` variable:
+
+```bash
+    -lsubdynlib \
+    -lversioninfolib \ # <-- Add this line 
+     $(BLASLIB) \
+    -L$(HDF5_DIR)/lib/ \
+    -lhdf5_hl \
+
+```
+
+The last file you need to edit, is:
+
+```bash
+src/turbineModels/turbineModelsOpenFAST/Make/options
+``` 
+
+Here you  have to add the paths to the HDF5 libraries, both in the EXE_INC and in the LIB_LIBS variable:
+
+```bash 
+ # Inside the EXE_INC variable 
+    -I$(LIB_SRC)/transportModels \
+     $(PFLAGS) \
+     $(PINC) \
+    -I$(OPENFAST_DIR)/include \ # <--  Add this backslash 
+    -I$(HDF5_DIR)/include  # >-- and add this line
+```
+
+and, in the same file, but in the LIB_LIBS variable:
+```bash 
+ # Inside the LIB_LIBS variable 
+    -lsctypeslib \
+    -lservodynlib \
+    -lsubdynlib \  # <-- Add this backslash
+    -L$(HDF5_DIR)/lib \ # and add the next three lines 
+    -lhdf5 \
+    -lhdf5_hl
+```
+
+Once finished editing the `options` files, we must declare certain paths with environment variables:
+
+First, we export the location of the OpenFAST installation directory. You must change the path to wherever you installed OpenFAST:
 
 ```bash
 $ export OPENFAST_DIR="/path/to/wherever/you/installed/OpenFAST"
 ``` 
 
-
-Also, we export the location of the HDF5 installation directory. You should change the path to wherever you have installed the HDF5 library. On Ubuntu 16.04 and Ubuntu 18.04 this should be:
+Also, we export the location of the HDF5 installation directory. You should change the path to wherever you have installed the HDF5 library. It must be a directory that contains an `include` directory with the headers, and a `lib` directory with the libraries. On Ubuntu 16.04 and Ubuntu 18.04 this should be:
 
 ```bash
 $ export HDF5_DIR="/usr/lib/x86_64-linux-gnu/hdf5/serial"
 ``` 
 
+Finally, we declare the path to wherever you want SOWFA to be installed:
+```bash 
+$ export SOWFA_DIR="/path/to/wherever/you/want/"
+```
 
-Finally, we go to the SOWFA root directory and launch the SOWFA compilation with:
+Then, we go to the SOWFA source directory and launch the SOWFA compilation with:
 ```bash
 $ cd ${HOME}/SOWFA
-$ WM_PROJECT_USER_DIR=${PWD} ./Allwmake
+$ ./Allwmake
 ``` 
 
-The resulting binaries will be at `${FOAM_USER_APPBIN}`:
+The resulting binaries will be at `${SOWFA_DIR}/applications/bin/${WM_OPTIONS}`:
 ```bash
-$ ls ${FOAM_USER_APPBIN}
-```
-```shell
+$ ls ${SOWFA_DIR}/applications/bin/${WM_OPTIONS}
+
  ABLSolver                            ABLTerrainSolver 
  pisoFoamTurbine.ADM                  pisoFoamTurbine.ALM 
  pisoFoamTurbine.ALMAdvanced          pisoFoamTurbine.ALMAdvancedOpenFAST 
@@ -258,12 +321,11 @@ $ ls ${FOAM_USER_APPBIN}
  windPlantSolver.ALMAdvancedOpenFAST 
 ``` 
 
-and the associated libraries will be inside `${FOAM_USER_LIBBIN}`:
+and the associated libraries will be inside `${SOWFA_DIR}/lib/${WM_OPTIONS}/`:
 
 ```bash
-$ ls ${FOAM_USER_LIBBIN}
-``` 
-```
+$ ls ${SOWFA_DIR}/lib/${WM_OPTIONS}/
+
  libSOWFATurbineModelsOpenFAST.so  libSOWFATurbineModelsStandard.so
  libSOWFAfiniteVolume.so           libSOWFAincompressibleLESModels.so
  libSOWFAsampling.so               libSOWFArutilityFunctionObjects.so
@@ -297,11 +359,10 @@ For example, our Intel MKL libraries are located inside the folder `/opt/intel20
 $ export LD_LIBRARY_PATH=/opt/intel2018/mkl/lib/intel64/:${LD_LIBRARY_PATH}
 ```
 
-
-Also, if for any reason the path `${FOAM_USER_LIBBIN}` during runtime is different from the one that you used during compilation, the SOWFA applications will not be able to start. This can happen for several reasons: if the user that compiled the code is different from the one that runs the code each one will see a different path in the variable `${FOAM_USER_LIBBIN}`. Another possibility is that you need to move the libraries to a different location. In any case, you should declare the new location of the SOWFA libraries in the `${LD_LIBRARY_PATH}` variable:
+Also, you must declare the location of the SOWFA libraries, so the SOWFA binaries can find them at runtime. As usual, you must append that location to the LD_LIBRARY_PATH variable:
  
 ```bash
-$ export LD_LIBRARY_PATH=/location/of/SOWFA/libraries/:${LD_LIBRARY_PATH}
+$ export LD_LIBRARY_PATH=${SOWFA_DIR}/lib/${WM_OPTIONS}/:${LD_LIBRARY_PATH}
 ```
  
 
