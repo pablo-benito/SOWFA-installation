@@ -297,14 +297,14 @@ Also, we export the location of the HDF5 installation directory. You should chan
 $ export HDF5_DIR="/usr/lib/x86_64-linux-gnu/hdf5/serial"
 ``` 
 
-Finally, we declare the path to wherever you want SOWFA to be installed:
+Finally, we must declare the path to wherever you downloaded SOWFA inside the `SOWFA_DIR` environment variable, in our example it was `${HOME}/SOWFA`:
 ```bash 
-$ export SOWFA_DIR="/path/to/wherever/you/want/"
+$ export SOWFA_DIR="${HOME}/SOWFA"
 ```
 
 Then, we go to the SOWFA source directory and launch the SOWFA compilation with:
 ```bash
-$ cd ${HOME}/SOWFA
+$ cd ${SOWFA_DIR}
 $ ./Allwmake
 ``` 
 
