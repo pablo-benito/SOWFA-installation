@@ -364,7 +364,12 @@ Also, you must declare the location of the SOWFA libraries, so the SOWFA binarie
 ```bash
 $ export LD_LIBRARY_PATH=${SOWFA_DIR}/lib/${WM_OPTIONS}/:${LD_LIBRARY_PATH}
 ```
- 
+
+## Citation
+
+Did you like my notes? Please cite! 
+[![DOI](https://zenodo.org/badge/185154334.svg)](https://zenodo.org/badge/latestdoi/185154334)
+
 
 ## References
 
