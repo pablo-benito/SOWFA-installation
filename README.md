@@ -93,7 +93,7 @@ sudo apt-get install intel-mkl-2019.3-062
 or, if you prefer to use the OpenBLAS implementation, just type:
 
 ```
-sudo apt-get install openblas-dev
+sudo apt-get install libopenblas-dev
 ``` 
 
 By default the OpenFAST `cmake` script will try to find and use the Intel MKL library. Otherwise it will use the OpenBLAS library. 
