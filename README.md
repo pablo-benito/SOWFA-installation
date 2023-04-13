@@ -40,7 +40,7 @@ It's impossible to cover all the combinations of OS, package versions and enviro
 As we said, on an Ubuntu 16.04/18.04 machine all those packages can be installed simply typing:
 
 ```bash
-$ sudo apt install build-essential flex bison gfortran git cmake python python-dev  \
+sudo apt install build-essential flex bison gfortran git cmake python python-dev  \
     zlib1g-dev libreadline-dev libncurses-dev libyaml-cpp-dev libgmp-dev libmpfr-dev \
     libboost-system-dev libboost-thread-dev libopenmpi-dev openmpi-bin \
     libhdf5-dev libxml2-dev libcgal-dev libptscotch-dev libscotch-dev   
