@@ -54,15 +54,15 @@ OpenFAST code is basically Fortran (2003 standard) with some parts in C++ (2011 
 First download the OpenFAST code:
 
 ```bash
-$ git clone https://github.com/OpenFAST/OpenFAST.git
+git clone https://github.com/OpenFAST/OpenFAST.git
 ```
 
 Go to the OpenFAST directory, and create a *build* folder:
 
 ```bash
-$ cd OpenFAST
-$ mkdir build 
-$ cd build
+cd OpenFAST
+mkdir build 
+cd build
 
 ```
 
@@ -76,8 +76,8 @@ The Yaml-cpp library was also installed through the package manager, and the roo
 We declare the location of all those paths through these two environment variables:
 
 ```bash
-$ export HDF5_ROOT="/usr/lib/x86_64-linux-gnu/hdf5/serial"
-$ export YAML_ROOT="/usr/"
+export HDF5_ROOT="/usr/lib/x86_64-linux-gnu/hdf5/serial"
+export YAML_ROOT="/usr/"
 ```
 
 Then we will launch the `cmake` configuration tool with a bunch of flags, depending on our preferences for the compilers, the Blas/Lapack libraries and the installation directory.
@@ -87,13 +87,13 @@ The first thing we have to do is choosing the compiler. For this, `cmake` has th
 Then you have to install the BLAS/LAPACK libraries to be used by OpenFAST. Our recommended option is using the Intel MKL libraries that can be downloaded for free from [Intel](https://software.intel.com/en-us/articles/installing-intel-free-libs-and-python-apt-repo). Once you have configured the apt repository from intel, just install the latest version of MKL available. For example:
 
 ```
-$ sudo apt-get install intel-mkl-2019.3-062
+sudo apt-get install intel-mkl-2019.3-062
 ```  
 
 or, if you prefer to use the OpenBLAS implementation, just type:
 
 ```
-$ sudo apt-get install openblas-dev
+sudo apt-get install openblas-dev
 ``` 
 
 By default the OpenFAST `cmake` script will try to find and use the Intel MKL library. Otherwise it will use the OpenBLAS library. 
@@ -106,7 +106,7 @@ The two final arguments are needed in order to couple OpenFAST with OpenFOAM.
 
 
 ```bash
-$ cmake \
+cmake \
     -DCMAKE_C_COMPILER=icc \
     -DCMAKE_CXX_COMPILER=icpc \
     -DCMAKE_Fortran_COMPILER=ifort \
@@ -121,8 +121,8 @@ $ cmake \
 Once the project is successfully configured, run the usual `make` and `make install`
 
 ```bash
-$ make 
-$ make install 
+make 
+make install 
 ```
 
 
@@ -134,9 +134,9 @@ First create the OpenFOAM installation folder, in our case it will be located at
 
 ```bash
 # Create the OpenFOAM install folder
-$ cd ${HOME} 
-$ mkdir -p OpenFOAM
-$ cd OpenFOAM
+cd ${HOME} 
+mkdir -p OpenFOAM
+cd OpenFOAM
 ``` 
 
 
@@ -144,8 +144,8 @@ Now, *inside* the OpenFOAM installation folder, download OpenFOAM 2.4.x code, an
 
 ```bash
 # Download the OpenFOAM source code
-$ git clone https://github.com/pablo-benito/OpenFOAM-2.4.x
-$ git clone https://github.com/pablo-benito/ThirdParty-2.4.x.git
+git clone https://github.com/pablo-benito/OpenFOAM-2.4.x
+git clone https://github.com/pablo-benito/ThirdParty-2.4.x.git
 ```
 
 By default, OpenFOAM assumes that the installation path is going to be `${HOME}/OpenFOAM/`. If your installation folder is in a different location, you must edit the file  `OpenFOAM-2.4.x/etc/bashrc` and change the variable `foamInstall` so that it points to the required location.
@@ -153,16 +153,16 @@ By default, OpenFOAM assumes that the installation path is going to be `${HOME}/
 The next step is optional, but recommended: since we prefer to use CGAL 4.7 that comes with Ubuntu instead of compiling the older version that comes in the ThirdParty package, we are going to configure OpenFOAM accordingly by running:
 
 ```bash 
-$ sed -i -e 's/^\(cgal_version=\).*/\1cgal-system/' OpenFOAM-2.4.x/etc/config/CGAL.sh
+sed -i -e 's/^\(cgal_version=\).*/\1cgal-system/' OpenFOAM-2.4.x/etc/config/CGAL.sh
 ```
 
 
 Now, before we can build OpenFOAM, we need to do a few fixes. OpenFOAM 2.4.x do not properly detect modern versions of Flex, so we have to edit some files:
 
 ```bash
-$ source ${HOME}/OpenFOAM/OpenFOAM-2.4.x/etc/bashrc
-$ cd ${WM_PROJECT_DIR}
-$ find src applications -name "*.L" -type f | xargs \
+source ${HOME}/OpenFOAM/OpenFOAM-2.4.x/etc/bashrc
+cd ${WM_PROJECT_DIR}
+find src applications -name "*.L" -type f | xargs \
     sed -i -e 's=\(YY\_FLEX\_SUBMINOR\_VERSION\)=YY_FLEX_MINOR_VERSION < 6 \&\& \1='
 ```
 
@@ -170,14 +170,14 @@ $ find src applications -name "*.L" -type f | xargs \
 In order to reduce the OpenFOAM compilation time, we can configure the `wmake` utility to use more than one core. In our case, we set it up to 4 cores with:
 
 ```bash
-$ export WM_NCOMPPROCS=4
+export WM_NCOMPPROCS=4
 ```
 
 Finally we run the compilation:
 
 ```bash
-$ cd ${WM_PROJECT_DIR}
-$ ./Allwmake
+cd ${WM_PROJECT_DIR}
+./Allwmake
 ```
 
 
@@ -186,16 +186,16 @@ $ ./Allwmake
 Before doing anything we must load our OpenFOAM environment by:
 
 ```bash
-$ source ${HOME}/OpenFOAM/OpenFOAM-2.4.x/etc/bashrc
+source ${HOME}/OpenFOAM/OpenFOAM-2.4.x/etc/bashrc
 ```
 
 Then, we download the SOWFA code:
 
 ```bash
 # Download SOWFA code into ${HOME}
-$ cd ${HOME}
-$ git clone https://github.com/NREL/SOWFA.git
-$ cd SOWFA
+cd ${HOME}
+git clone https://github.com/NREL/SOWFA.git
+cd SOWFA
 ```
 
 At the time of writing this document, there is a couple of changes that we must do in the OpenFAST SOWFA code. First of all, we must add the include paths and lib path to the HDF5 library in certain files. Also, starting with OpenFAST version 1.0, there is an extra library, `versioninfolib`, that must be included as a dependency in some SOWFA binaries.
@@ -288,29 +288,29 @@ Once finished editing the `options` files, we must declare certain paths with en
 First, we export the location of the OpenFAST installation directory. You must change the path to wherever you installed OpenFAST:
 
 ```bash
-$ export OPENFAST_DIR="/path/to/wherever/you/installed/OpenFAST"
+export OPENFAST_DIR="/path/to/wherever/you/installed/OpenFAST"
 ``` 
 
 Also, we export the location of the HDF5 installation directory. You should change the path to wherever you have installed the HDF5 library. It must be a directory that contains an `include` directory with the headers, and a `lib` directory with the libraries. On Ubuntu 16.04 and Ubuntu 18.04 this should be:
 
 ```bash
-$ export HDF5_DIR="/usr/lib/x86_64-linux-gnu/hdf5/serial"
+export HDF5_DIR="/usr/lib/x86_64-linux-gnu/hdf5/serial"
 ``` 
 
 Finally, we must declare the path to wherever you downloaded SOWFA inside the `SOWFA_DIR` environment variable, in our example it was `${HOME}/SOWFA`:
 ```bash 
-$ export SOWFA_DIR="${HOME}/SOWFA"
+export SOWFA_DIR="${HOME}/SOWFA"
 ```
 
 Then, we go to the SOWFA source directory and launch the SOWFA compilation with:
 ```bash
-$ cd ${SOWFA_DIR}
-$ ./Allwmake
+cd ${SOWFA_DIR}
+./Allwmake
 ``` 
 
 The resulting binaries will be at `${SOWFA_DIR}/applications/bin/${WM_OPTIONS}`:
 ```bash
-$ ls ${SOWFA_DIR}/applications/bin/${WM_OPTIONS}
+ls ${SOWFA_DIR}/applications/bin/${WM_OPTIONS}
 
  ABLSolver                            ABLTerrainSolver 
  pisoFoamTurbine.ADM                  pisoFoamTurbine.ALM 
@@ -324,7 +324,7 @@ $ ls ${SOWFA_DIR}/applications/bin/${WM_OPTIONS}
 and the associated libraries will be inside `${SOWFA_DIR}/lib/${WM_OPTIONS}/`:
 
 ```bash
-$ ls ${SOWFA_DIR}/lib/${WM_OPTIONS}/
+ls ${SOWFA_DIR}/lib/${WM_OPTIONS}/
 
  libSOWFATurbineModelsOpenFAST.so  libSOWFATurbineModelsStandard.so
  libSOWFAfiniteVolume.so           libSOWFAincompressibleLESModels.so
@@ -340,7 +340,7 @@ As we have seen, SOWFA binaries depends on a wide group of libraries: The OpenFO
 First we must load the *OpenFOAM 2.4.x environment*: 
 
 ```bash
-$ source [INSTALL_PREFIX_FOR_OPENFOAM_2.4.x]/etc/bashrc
+source [INSTALL_PREFIX_FOR_OPENFOAM_2.4.x]/etc/bashrc
 ```
 
 This ensures that the OpenFOAM core libraries are visible to our binaries. 
@@ -349,20 +349,20 @@ For the other groups of libraries, we need to append their locations to the `${L
 We will start with the OpenFAST libraries. If the root installation path of OpenFAST is pointed by the variable `${OPENFAST_DIR}`, then the libraries are located in the `${OPENFAST_DIR}/lib` folder.  
 
 ```bash
-$ export LD_LIBRARY_PATH=${OPENFAST_DIR}/lib:${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=${OPENFAST_DIR}/lib:${LD_LIBRARY_PATH}
 ```
 
 If the location of the *Blas/Lapack libraries* is not a *default* one, you must also add it to your `${LD_LIBRARY_PATH}` variable. 
 For example, our Intel MKL libraries are located inside the folder `/opt/intel2018/mkl/lib/intel64/`, so we did:
 
 ```bash
-$ export LD_LIBRARY_PATH=/opt/intel2018/mkl/lib/intel64/:${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=/opt/intel2018/mkl/lib/intel64/:${LD_LIBRARY_PATH}
 ```
 
 Also, you must declare the location of the SOWFA libraries, so the SOWFA binaries can find them at runtime. As usual, you must append that location to the LD_LIBRARY_PATH variable:
  
 ```bash
-$ export LD_LIBRARY_PATH=${SOWFA_DIR}/lib/${WM_OPTIONS}/:${LD_LIBRARY_PATH}
+export LD_LIBRARY_PATH=${SOWFA_DIR}/lib/${WM_OPTIONS}/:${LD_LIBRARY_PATH}
 ```
 
 ## Citation
@@ -377,8 +377,3 @@ Did you like my notes? Please cite!
  * [OpenFAST](http://openfast.readthedocs.io)
  * [OpenFAST installation docs](http://openfast.readthedocs.io/en/master/source/install/index.html)
  * [OpenFOAM installation](https://openfoamwiki.net/index.php/Installation/Linux/OpenFOAM-2.4.0/Ubuntu#Ubuntu_16.04)
-
-
-
-
-
