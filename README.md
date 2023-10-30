@@ -51,10 +51,10 @@ sudo apt install build-essential flex bison gfortran git cmake python python-dev
 
 OpenFAST code is basically Fortran (2003 standard) with some parts in C++ (2011 standard) code, so a recent C++ and Fortran compiler is needed. After the tests we did, we can say that the best performance is achieved by using a recent version of the Intel Composer Compiler Suite. 
 
-First download the OpenFAST code:
+First download the OpenFAST code (version v2.3.0):
 
 ```bash
-git clone https://github.com/OpenFAST/OpenFAST.git
+git clone https://github.com/OpenFAST/OpenFAST.git -b v2.3.0
 ```
 
 Go to the OpenFAST directory, and create a *build* folder:
