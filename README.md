@@ -2,7 +2,7 @@
 
 # _**-- WARNING --**_
 
-This document contains my brief notes about how to compile and install _the old and deprecated_ NREL/SOWFA coupled with OpenFAST. **This software is not currently developed nor maintained and heavily depends or really old third party software.** 
+This document contains my brief notes about how to compile and install _the old and deprecated_ NREL/SOWFA coupled with OpenFAST. **This software is not currently developed nor maintained and heavily depends on really old third party software.** 
 
 For a more recent version of SOWFA please go to [https://github.com/NREL/SOWFA-6](https://github.com/NREL/SOWFA-6) 
 
